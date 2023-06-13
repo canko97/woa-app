@@ -1,0 +1,45 @@
+#prettier-ignore
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infrastructure/k8s/*
+build:
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: woa-dev-389512
+  artifacts:
+    - image: us.gcr.io/woa-dev-389512/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: './**/*.tsx'
+            dest: .
+    - image: us.gcr.io/woa-dev-389512/auth
+      context: auth-microservice
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: us.gcr.io/woa-dev-389512/notifications
+      context: notifications-microservice
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: us.gcr.io/woa-dev-389512/postfeed
+      context: postfeed-microservice
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

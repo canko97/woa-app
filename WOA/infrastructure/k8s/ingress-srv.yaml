@@ -1,0 +1,141 @@
+#prettier-ignore
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-stv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/configuration-snippet: | 
+      autoindex off;
+spec:
+  rules:
+    - host: woaapp.com
+      http:
+        paths:
+          - path: /api/auth/healthcheck
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/users/get
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/users/create
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/users/verify/?(.*)/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/users/forgotpassword
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/users/resetpassword/?(.*)/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/users/get/me
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          # - path: /api/auth/users/get/?(.*)
+          #   pathType: ImplementationSpecific
+          #   backend:
+          #     service:
+          #       name: auth-clusterip-srv
+          #       port: 
+          #         number: 5000
+          - path: /api/auth/sessions/create
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/sessions/delete
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/sessions/keep-alive
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/auth/sessions/oauth/google
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-clusterip-srv
+                port: 
+                  number: 5000
+          - path: /api/notes/create
+            pathType: Prefix
+            backend:
+              service:
+                name: postfeed-clusterip-srv
+                port: 
+                  number: 5002
+          - path: /api/notes/get
+            pathType: Prefix
+            backend:
+              service:
+                name: postfeed-clusterip-srv
+                port: 
+                  number: 5002
+          - path: /api/notes/update
+            pathType: Prefix
+            backend:
+              service:
+                name: postfeed-clusterip-srv
+                port: 
+                  number: 5002
+          - path: /api/notes/delete
+            pathType: Prefix
+            backend:
+              service:
+                name: postfeed-clusterip-srv
+                port: 
+                  number: 5002
+          - path: /api/notes/healthcheck
+            pathType: Prefix
+            backend:
+              service:
+                name: postfeed-clusterip-srv
+                port: 
+                  number: 5002
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-clusterip-srv
+                port: 
+                  number: 3000

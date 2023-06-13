@@ -1,0 +1,17 @@
+{
+  "api": {
+    "port": ""
+  },
+  "messaging": {
+    "rabbitMQ": {
+      "connectionString": ""
+    }
+  },
+  "smtp": {
+    "service": "",
+    "auth": {
+      "user": "",
+      "pass": ""
+    }
+  }
+}

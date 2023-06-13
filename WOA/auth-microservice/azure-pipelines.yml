@@ -1,0 +1,74 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+jobs:
+  - job: Build
+    steps:
+      - task: DockerInstaller@0
+        inputs:
+          dockerVersion: '23.0.5'
+          displayName: 'Install Docker'
+
+      - task: SonarQubePrepare@5
+        inputs:
+          SonarQube: 'auth-microserviceservice'
+          scannerMode: 'CLI'
+          configMode: 'manual'
+          cliProjectKey: 'auth-microservice'
+          cliProjectName: 'auth-microservice'
+          cliSources: '.'
+          displayName: 'SonarQubePrepare'
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '16.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          # Install Docker Compose
+          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+        displayName: 'Install Docker Compose'
+
+      - script: |
+          npm install
+        displayName: 'install'
+
+      - script: |
+          npm test
+        displayName: 'test'
+
+      - script: |
+          npm run build
+        displayName: 'build'
+
+      - task: SonarQubeAnalyze@5
+
+      - task: SonarQubePublish@5
+        inputs:
+          pollingTimeoutSec: '300'
+
+      - script: |
+          npm run dockerize
+        displayName: 'Build Docker Image and Container'
+
+      - script: |
+          npm run compose-down
+        displayName: 'Stop the docke imag and container'
+
+  - job: WaitingApproval
+    dependsOn: Build
+    pool: server
+    timeoutInMinutes: 1000
+    steps:
+      - task: ManualValidation@0
+        inputs:
+          notifyUsers: 't.nedelchev@student.fontys.nl'
+          instructions: 'Check Sonar Dashboard and approve'

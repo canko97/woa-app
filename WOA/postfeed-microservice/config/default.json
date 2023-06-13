@@ -1,0 +1,22 @@
+{
+  "environment": "",
+  "api": {
+    "version": "",
+    "port": ""
+  },
+  "database": {
+    "mongodb": {
+      "connectionString": ""
+    }
+  },
+  "publicKey": "",
+  "privateKey": "",
+  "logLevel": "debug",
+  "accessTokenPrivateKey": "",
+  "accessTokenPublicKey": "",
+  "refreshTokenPrivateKey": "",
+  "refreshTokenPublicKey": "",
+  "cookie": {
+    "domain": ""
+  }
+}

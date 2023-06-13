@@ -1,0 +1,58 @@
+#prettier-ignore
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postfeed-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postfeed
+  template:
+    metadata:
+      labels:
+        app: postfeed
+    spec:
+      containers:
+        - name: postfeed
+          image: us.gcr.io/woa-dev-389512/postfeed
+          resources:
+            requests:
+              cpu: 200m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 300Mi
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: postfeed-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: postfeed-depl
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postfeed-clusterip-srv
+spec:
+  selector:
+    app: postfeed
+  type: ClusterIP
+  ports:
+    - name: postfeed
+      protocol: TCP
+      port: 5002
+      targetPort: 5002
