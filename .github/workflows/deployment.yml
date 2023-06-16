@@ -2,32 +2,49 @@ name: Deploy to GKE with Skaffold
 
 on:
   push:
-    branches:
-      - main  # Adjust this branch name to match your target branch
+    branches: [ "main" ]
 
+env:
+  PROJECT_ID: woa-dev-389512
+  GAR_LOCATION: europe-west4 # TODO: update region of the Artifact Registry
+  GKE_CLUSTER: woa-dev    # TODO: update to cluster name
+  GKE_ZONE: europe-west4-a   # TODO: update to cluster zone
+  DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
+  REPOSITORY: samples # TODO: update to Artifact Registry docker repository
+  IMAGE: static-site
+  
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set working directory
+      run: cd WOA
+      
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: 'projects/122782001930/locations/global/workloadIdentityPools/github-actions/attribute.repository/canko97/woa-app'
+        service_account: 'github-actions@woa-dev-389512.iam.gserviceaccount.com'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
+      with:
+        version: '>= 363.0.0'
         
-      - name: Set working directory
-        run: cd WOA
+    - name: Install Skaffold
+      run: |
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
+        mkdir -p $HOME/bin
+        mv skaffold $HOME/bin
+        echo "::add-path::$HOME/bin"
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.5.1
-        with:
-          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
-          export_default_credentials: true
-
-      - name: Install Skaffold
-        run: |
-          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-          chmod +x skaffold
-          sudo mv skaffold /usr/local/bin/
-
-      - name: Deploy with Skaffold
-        run: skaffold run -f WOA/skaffold.yaml
+    - name: Deploy with Skaffold
+      run: skaffold run -f skaffold.yaml
