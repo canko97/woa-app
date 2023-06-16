@@ -30,4 +30,6 @@ jobs:
         with:
           context: ./WOA/auth-microservice
           push: true
-          tags: user/app:latest
+          tags: tsankonedelchev/auth:latest
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.GIT_AUTH_TOKEN }}
