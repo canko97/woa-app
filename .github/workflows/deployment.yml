@@ -41,7 +41,4 @@ jobs:
 
     - name: 'Use gcloud CLI'
       run: |
-        gcloud config set project $PROJECT_ID;
-        gcloud config set compute/zone $GKE_ZONE;
-        gcloud container clusters get-credentials $GKE_CLUSTER;
         kubectl apply -f ./infrastructure/k8s/auth-clusterip-depl.yaml
