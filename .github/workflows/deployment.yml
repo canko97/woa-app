@@ -46,4 +46,4 @@ jobs:
         mv skaffold $HOME/bin
 
     - name: Deploy with Skaffold
-      run: skaffold run -f skaffold.yaml
+      run: $HOME/bin/skaffold.exe run -f skaffold.yaml
