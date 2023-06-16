@@ -13,8 +13,8 @@ jobs:
         context:
           - 'auth-microservice'
           - 'client'
-          - 'postfeed-microservices'
-          - 'notifications-microservices'
+          - 'postfeed-microservice'
+          - 'notifications-microservice'
 
     steps:
       -
@@ -41,3 +41,4 @@ jobs:
           tags: tsankonedelchev/${{ matrix.context }}:latest
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.GIT_AUTH_TOKEN }}
+        timeout-minutes: 20
