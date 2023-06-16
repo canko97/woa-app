@@ -11,10 +11,10 @@ jobs:
     strategy:
       matrix:
         context:
-          - './WOA/auth-microservice'
-          - './WOA/client'
-          - './WOA/postfeed-microservices'
-          - './WOA/notifications-microservices'
+          - 'auth-microservice'
+          - 'client'
+          - 'postfeed-microservices'
+          - 'notifications-microservices'
 
     steps:
       -
@@ -36,7 +36,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ${{ matrix.context }}
+          context: ./WOA/${{ matrix.context }}
           push: true
           tags: tsankonedelchev/${{ matrix.context }}:latest
           secrets: |
