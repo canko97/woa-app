@@ -5,7 +5,6 @@ import fetcher from '../utils/fetcher';
 import LoginForm from '../components/LoginForm';
 import User from '@/interfaces/User';
 import Dashboard from '@/components/Dashdoard';
-import { useEffect } from 'react';
 
 const Home: NextPage<{ fallbackData: User | undefined }> = ({
   fallbackData,
@@ -13,17 +12,10 @@ const Home: NextPage<{ fallbackData: User | undefined }> = ({
   const router = useRouter();
 
   const { data, error } = useSWR<User>(
-    `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/auth/users/get/me`,
+    `${process.env.NEXT_PUBLIC_AUTH_SERVER_ENDPOINT}/api/auth/users/get/me`,
     fetcher,
     { fallbackData, revalidateOnMount: true }
   );
-
-  // useEffect(() => {
-  //   if (data) {
-  //     // Save the user to localStorage
-  //     localStorage.setItem('user', JSON.stringify(data));
-  //   }
-  // }, [data]);
 
   if (error) {
     return (
@@ -51,7 +43,7 @@ const Home: NextPage<{ fallbackData: User | undefined }> = ({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const data = await fetcher(
-      `http://auth-srv/api/auth/users/get/me`,
+      `${process.env.NEXT_PUBLIC_SERVER_SIDE_ENDPOINT}/api/auth/users/get/me`,
       context.req.headers
     );
     console.log('Server');

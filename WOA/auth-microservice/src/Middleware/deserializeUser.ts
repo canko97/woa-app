@@ -42,11 +42,8 @@ const deserializeUser = async (
 
         res.cookie('accessToken', newAccessToken, {
           maxAge: 86400000, // 1 day
-          // httpOnly: true,
-          // domain: 'woa.com',
-          // path: '/',
-          // // sameSite: 'strict',
-          // secure: false,
+          httpOnly: true,
+          sameSite: 'strict',
         });
 
         const decoded = verifyJwt(newAccessToken, 'accessTokenPublicKey');

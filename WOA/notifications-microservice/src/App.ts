@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import compresson from 'compression';
 import { Server } from 'http';
 import { startRabbitMQConsumer } from './Utils/rabbitmq-consumer'; // assuming the file with the RabbitMQ consumer code is called 'rabbitmq-consumer.ts'
+import config from 'config';
 
 export class App {
   public express: Application;
@@ -35,6 +36,8 @@ export class App {
   public listen(): Server {
     const app = this.express.listen(this.port, async () => {
       console.info(`App started at http://localhost:${this.port}`);
+      console.info(config.get('messaging.rabbitMQ.connectionString'));
+
       // connectToDb();
     });
 

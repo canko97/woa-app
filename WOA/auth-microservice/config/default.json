@@ -1,19 +1,12 @@
 {
-  "environment": "",
-  "origin": "http://woaapp.com",
-  "accessTokenTtl": "1m",
-  "refreshTokenTtl": "1y",
+  "origin": "http://localhost:3000",
   "api": {
     "version": "",
-    "port": "",
-    "cookie": {
-      "domain": "",
-      "secure": false
-    }
+    "port": ""
   },
   "messaging": {
     "rabbitMQ": {
-      "connectionString": ""
+      "connectionString": "amqp://localhost:5672"
     }
   },
   "database": {
@@ -25,8 +18,7 @@
   "accessTokenPublicKey": "",
   "refreshTokenPrivateKey": "",
   "refreshTokenPublicKey": "",
-  "logLevel": "debug",
-  "googleClientId": "753377049097-212d99ncie16tsf5852f08144p866ob3.apps.googleusercontent.com",
-  "googleClientSecret": "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",
-  "googleOauthRedirectUrl": "http://woaapp.com/api/auth/sessions/oauth/google"
+  "googleClientId": "",
+  "googleClientSecret": "",
+  "googleOauthRedirectUrl": "http://localhost:5000/api/auth/sessions/oauth/google"
 }

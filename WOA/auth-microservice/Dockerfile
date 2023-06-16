@@ -8,5 +8,7 @@ RUN npm install
 
 COPY ./ ./
 
-CMD ["npm", "start"]
+# Set environment variable to production
+ENV ENVIRONMENT=production
 
+CMD ["npm", "start"]

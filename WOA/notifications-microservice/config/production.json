@@ -4,7 +4,7 @@
   },
   "messaging": {
     "rabbitMQ": {
-      "connectionString": "amqp://localhost:5672"
+      "connectionString": "amqp://rabbitmq-service:5672"
     }
   },
   "smtp": {

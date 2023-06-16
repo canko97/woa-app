@@ -17,30 +17,6 @@ export function signJwt(
   });
 }
 
-// export function verifyJwt<T>(
-//   token: string,
-//   keyName: 'accessTokenPublicKey' | 'refreshTokenPublicKey'
-// ) {
-//   const publicKey = Buffer.from(config.get<string>(keyName), 'base64').toString(
-//     'ascii'
-//   );
-
-//   try {
-//     const decoded = jwt.verify(token, publicKey);
-//     return {
-//       valid: true,
-//       expired: false,
-//       decoded,
-//     };
-//   } catch (e: any) {
-//     console.error(e);
-//     return {
-//       valid: false,
-//       expired: e.message === 'jwt expired',
-//       decoded: null,
-//     };
-//   }
-// }
 export function verifyJwt<T>(
   token: string,
   keyName: 'accessTokenPublicKey' | 'refreshTokenPublicKey'
@@ -56,18 +32,3 @@ export function verifyJwt<T>(
     return null;
   }
 }
-// export function verifyJwt<T>(
-//   token: string,
-//   keyName: 'accessTokenPublicKey' | 'refreshTokenPublicKey'
-// ): T | null {
-//   const publicKey = Buffer.from(config.get<string>(keyName), 'base64').toString(
-//     'ascii'
-//   );
-
-//   try {
-//     const decoded = jwt.verify(token, publicKey) as T;
-//     return decoded;
-//   } catch (e) {
-//     return null;
-//   }
-// }

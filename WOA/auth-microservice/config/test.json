@@ -1,19 +1,12 @@
 {
   "environment": "",
   "api": {
-    "port": ""
+    "port": "5000"
   },
   "database": {
     "mongodb": {
       "connectionString": ""
     }
-  },
-  "smtp": {
-    "user": "aplb7m6jkgq3luqs@ethereal.email",
-    "pass": "4S9NwdqJsNRtygbXqs",
-    "host": "smtp.ethereal.email",
-    "port": 587,
-    "secure": false
   },
   "logLevel": "debug",
   "accessTokenPrivateKey": "",

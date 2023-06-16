@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import { AllowedOrigins } from './Utils/corsOrigins';
 import { Server } from 'http';
 import extractUser from './Middleware/extractUser';
+import config from 'config';
 
 export class App {
   private express: Application;
@@ -56,6 +57,7 @@ export class App {
   public listen(): Server {
     const app = this.express.listen(this.port, async () => {
       log.info(`App started at http://localhost:${this.port}`);
+      log.info(config.get('origin'));
       connectToDb();
       log.info(`API v${this.version}`);
     });

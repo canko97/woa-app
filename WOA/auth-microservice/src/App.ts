@@ -8,11 +8,9 @@ import log from './Utils/logger';
 import router from './Routes';
 import cookieParser from 'cookie-parser';
 import deserializeUser from './Middleware/deserializeUser';
-import restResponseTime from './Middleware/restResponseTime';
 import { AllowedOrigins } from './Utils/corsOrigins';
-import responseTime from 'response-time';
 import { Server } from 'http';
-import { startMetricServer } from './Utils/metrics';
+import config from 'config';
 
 export class App {
   private express: Application;
@@ -25,7 +23,6 @@ export class App {
     this.version = version || '1.0';
 
     this.initializeMiddleware();
-    // startMetricServer();
   }
 
   private initializeMiddleware(): void {
@@ -35,7 +32,6 @@ export class App {
     this.express.use(cookieParser());
     this.express.use(express.json());
     this.express.use(deserializeUser);
-    this.express.use(responseTime(restResponseTime));
     this.express.use(router);
     this.express.use(express.urlencoded({ extended: false }));
     this.express.use(compression());
@@ -61,6 +57,8 @@ export class App {
   public listen(): Server {
     const app = this.express.listen(this.port, async () => {
       log.info(`App started at http://localhost:${this.port}`);
+      log.info(config.get('origin'));
+      console.log(process.env.NODE_ENV);
       log.info(`API v${this.version}`);
       await connectToDb();
     });

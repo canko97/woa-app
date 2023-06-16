@@ -8,5 +8,7 @@ RUN npm install
 
 COPY ./ ./
 
+ENV ENVIRONMENT=production
+
 CMD ["npm", "start"]
 

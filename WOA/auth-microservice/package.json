@@ -6,7 +6,7 @@
   "scripts": {
     "compose-down": "docker compose down",
     "dockerize": "docker compose up --build -d",
-    "start": "npm run build && nodemon dist/index.js",
+    "start": "export NODE_ENV=production&& npm run build && nodemon dist/index.js",
     "build": "rm -rf dist && tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "jest"

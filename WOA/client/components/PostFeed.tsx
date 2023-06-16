@@ -15,7 +15,7 @@ const PostFeed: React.FC = () => {
   async function getNotes() {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/notes/get`,
+        `${process.env.NEXT_PUBLIC_POSTS_SERVER_ENDPOINT}/api/notes/get`,
         {
           withCredentials: true,
         }

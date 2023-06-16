@@ -57,7 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ fallbackData }) => {
   async function onSubmit(values: CreateSessionInput) {
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/auth/sessions/create`,
+        `${process.env.NEXT_PUBLIC_AUTH_SERVER_ENDPOINT}/api/auth/sessions/create`,
         values,
         { withCredentials: true }
       );

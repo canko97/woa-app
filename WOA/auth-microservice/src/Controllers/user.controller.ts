@@ -7,13 +7,13 @@ import {
   GetUserNameInput,
 } from '../Schema/user.schema';
 import { privateFields, User } from '../Models/user.model';
+import config from 'config';
 import {
   createUser,
   findUserByEmail,
   findUserById,
   findAllUsers,
 } from '../Services/user.service';
-// import log from '../utils/logger';
 import { nanoid } from 'nanoid';
 import sendRabbitMQ from '../Utils/rabbitMQ';
 import { getValidSessions } from '../Services/auth.service';
@@ -34,7 +34,9 @@ export async function createUserHandler(
       from: 'cankonedelchev@gmail.com',
       to: user.email,
       subject: 'Please verify your account',
-      text: `http://woaapp.com/verify-email?verificationCode=${user.verificationCode}&id=${user.id}`,
+      text: `${config.get('origin')}/verify-email?verificationCode=${
+        user.verificationCode
+      }&id=${user.id}`,
     };
     sendRabbitMQ(queue, JSON.stringify(emailData));
 
@@ -108,13 +110,6 @@ export async function forgotPasswordHandler(
     user.passwordResetCode = passwordResetCode;
 
     await user.save();
-
-    // await sendEmail({
-    //   to: user.email,
-    //   from: 'test@example.com',
-    //   subject: 'Reset your password',
-    //   text: `http://localhost:3000/verify-email?verificationCode=${passwordResetCode}&id=${user.id}`,
-    // });
 
     return res.send(message);
   } catch (error: any) {

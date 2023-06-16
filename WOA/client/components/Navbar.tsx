@@ -10,7 +10,7 @@ const Navbar: React.FC<{ user: User }> = ({ user }: { user: User }) => {
 
   async function logOut() {
     await axios.delete(
-      `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/auth/sessions/delete`,
+      `${process.env.NEXT_PUBLIC_AUTH_SERVER_ENDPOINT}/api/auth/sessions/delete`,
       { withCredentials: true }
     );
     router.reload();

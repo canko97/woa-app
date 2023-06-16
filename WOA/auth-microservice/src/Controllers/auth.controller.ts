@@ -17,11 +17,8 @@ import {
 
 const accessTokenCookieOptions = <CookieOptions>{
   maxAge: 1000000, // 15 min
-  // httpOnly: true,
-  // domain: 'http://woa.com/',
-  // path: '/',
-  // // sameSite: 'strict',
-  // secure: false,
+  httpOnly: true,
+  sameSite: 'strict',
 };
 
 const refreshTokenCookieOptions = <CookieOptions>{

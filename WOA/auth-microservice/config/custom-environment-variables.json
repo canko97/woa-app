@@ -4,23 +4,15 @@
     "version": "VERSION",
     "port": "PORT"
   },
-  "messaging": {
-    "rabbitMQ": {
-      "connectionString": "RABBITMQ_CONNECTION_STRING"
-    }
-  },
   "database": {
     "mongodb": {
       "connectionString": "MONGODB_CONNECTION_STRING"
     }
   },
-  "publicKey": "PUBLIC_KEY",
-  "privateKey": "PRIVATE_KEY",
   "accessTokenPrivateKey": "ACCESS_TOKEN_PRIVATE_KEY",
   "accessTokenPublicKey": "ACCESS_TOKEN_PUBLIC_KEY",
   "refreshTokenPrivateKey": "REFRESH_PRIVATE_KEY",
   "refreshTokenPublicKey": "REFRESH_PUBLIC_KEY",
-  "cookie": {
-    "domain": "COOKIE_DOMAIN"
-  }
+  "googleClientId": "GOOGLE_CLIENT_ID",
+  "googleClientSecret": "GOOGLE_CLIENT_SECRET"
 }

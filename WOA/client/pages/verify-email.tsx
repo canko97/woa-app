@@ -6,7 +6,7 @@ function VerifyEmail() {
   const { verificationCode, id } = router.query;
   console.log(verificationCode, id);
   // Send a request to your API endpoint to verify the user's email
-  const apiUrl = `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/users/verify/${id}/${verificationCode}`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_AUTH_SERVER_ENDPOINT}/api/users/verify/${id}/${verificationCode}`;
 
   console.log(apiUrl);
 

@@ -7,7 +7,7 @@ const KeepAlive = () => {
       // Send a keep-alive request to the server
       axios
         .get(
-          `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/auth/sessions/keep-alive`,
+          `${process.env.NEXT_PUBLIC_AUTH_SERVER_ENDPOINT}/api/auth/sessions/keep-alive`,
           { withCredentials: true }
         )
         .then((response) => {})
