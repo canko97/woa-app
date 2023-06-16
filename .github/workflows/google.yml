@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  PROJECT_ID: woa-dev-389512
   GAR_LOCATION: europe-west4 # TODO: update region of the Artifact Registry
   GKE_CLUSTER: woa-dev    # TODO: update to cluster name
   GKE_ZONE: europe-west4-a   # TODO: update to cluster zone
@@ -34,4 +34,4 @@ jobs:
         version: '>= 363.0.0'
 
     - name: 'Use gcloud CLI'
-      run: 'gcloud info'
+      run: 'gcloud components install skaffold'
