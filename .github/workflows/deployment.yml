@@ -38,12 +38,10 @@ jobs:
       uses: 'google-github-actions/setup-gcloud@v1'
       with:
         version: '>= 363.0.0'
-        
-    - name: Install Skaffold
-      run: |
-        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
-        mkdir -p $HOME/bin
-        mv skaffold $HOME/bin
 
-    - name: Deploy with Skaffold
-      run: $HOME/bin/skaffold.exe run -f skaffold.yaml
+    - name: 'Use gcloud CLI'
+      run: |
+        gcloud config set project $PROJECT_ID;
+        gcloud config set compute/zone $GKE_ZONE;
+        gcloud container clusters get-credentials $GKE_CLUSTER;
+        kubectl apply -f ./infrastructure/k8s/auth-clusterip-depl.yaml
