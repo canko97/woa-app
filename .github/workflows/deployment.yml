@@ -44,7 +44,6 @@ jobs:
         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
         mkdir -p $HOME/bin
         mv skaffold $HOME/bin
-        echo "::add-path::$HOME/bin"
 
     - name: Deploy with Skaffold
       run: skaffold run -f skaffold.yaml
