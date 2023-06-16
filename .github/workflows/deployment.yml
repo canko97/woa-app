@@ -41,4 +41,5 @@ jobs:
 
     - name: 'Use gcloud CLI'
       run: |
+        kubectl cluster-info
         kubectl apply -f ./infrastructure/k8s/auth-clusterip-depl.yaml
