@@ -56,7 +56,7 @@ jobs:
     needs: deploy
 
     steps:
-      - name: Wait for
+      - name: Wait 15 min for cluster to stabiliza
         run: sleep 900
 
   zap_scan:
@@ -67,7 +67,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: main
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.4.0
         with:
