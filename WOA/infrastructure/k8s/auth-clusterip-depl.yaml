@@ -16,6 +16,7 @@ spec:
       containers:
         - name: auth
           image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/auth
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 200m

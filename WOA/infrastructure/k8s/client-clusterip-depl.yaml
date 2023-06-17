@@ -16,6 +16,7 @@ spec:
       containers:
         - name: client
           image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/client
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service

@@ -16,6 +16,7 @@ spec:
       containers:
         - name: notifications
           image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/notifications
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 200m
