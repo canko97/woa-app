@@ -51,12 +51,23 @@ jobs:
   #         kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-srv.yaml
   #         kubectl apply -f ./WOA/infrastructure/k8s/ingress-srv.yaml
 
+  # buffer:
+  #   runs-on: ubuntu-latest
+  #   needs: deploy
+  #   steps:
+  #     - name: Wait 10 min for the cluster to stabilize
+  #       run: sleep 600
+
   zap_scan:
-    name: Scan REST APIs
+    permissions: write-all
     runs-on: ubuntu-latest
+    name: OWASP ZAP scan
     steps:
-      - name: ZAP Scan for crudall API
-        uses: zaproxy/action-api-scan@v0.1.0
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.4.0
         with:
-          format: openapi
+          docker_name: 'owasp/zap2docker-stable'
           target: 'http://woaapp.com'
+          rules_file_name: '.zap/rules.tsv'
+          fail_action: false
+          cmd_options: '-a'
