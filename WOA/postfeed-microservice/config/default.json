@@ -1,8 +1,8 @@
 {
   "origin": "localhost:3000",
   "api": {
-    "version": "",
-    "port": ""
+    "version": "1.0",
+    "port": "5002"
   },
   "database": {
     "mongodb": {

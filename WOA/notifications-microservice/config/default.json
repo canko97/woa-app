@@ -1,6 +1,6 @@
 {
   "api": {
-    "port": ""
+    "port": "5001"
   },
   "messaging": {
     "rabbitMQ": {
@@ -8,7 +8,7 @@
     }
   },
   "smtp": {
-    "service": "",
+    "service": "gmail",
     "auth": {
       "user": "",
       "pass": ""
