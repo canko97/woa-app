@@ -38,7 +38,7 @@ jobs:
         env:
           GOOGLE_PROJECT: ${{ secrets.GCLOUD_PROJECT_ID }}
         run: |
-          gcloud container clusters get-credentials woa-dev --region europe-west4
+          gcloud container clusters get-credentials woa-dev --region europe-west4-a
           sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/auth-clusterip-depl.yaml
           sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
           sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
