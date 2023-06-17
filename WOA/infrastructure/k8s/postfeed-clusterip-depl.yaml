@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: postfeed
-          image: us.gcr.io/woa-dev-389512/postfeed
+          image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/postfeed
           resources:
             requests:
               cpu: 200m

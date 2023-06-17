@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: notifications
-          image: us.gcr.io/woa-dev-389512/notifications
+          image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/notifications
           resources:
             requests:
               cpu: 200m

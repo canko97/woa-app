@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: us.gcr.io/woa-dev-389512/auth
+          image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/auth
           resources:
             requests:
               cpu: 200m

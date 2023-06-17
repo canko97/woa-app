@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: us.gcr.io/woa-dev-389512/client
+          image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/client
 ---
 apiVersion: v1
 kind: Service
