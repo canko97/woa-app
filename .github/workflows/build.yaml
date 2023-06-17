@@ -27,4 +27,9 @@ jobs:
         gcloud auth configure-docker europe-west4-docker.pkg.dev
         docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest ./WOA/auth-microservice
         docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest
-     
+        docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/notifications:latest ./WOA/notifications-microservice
+        docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/notifications:latest
+        docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/postfeed:latest ./WOA/postfeed-microservice
+        docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/postfeed:latest
+        docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/client:latest ./WOA/client
+        docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/client:latest
