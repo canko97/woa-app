@@ -59,7 +59,11 @@ jobs:
           kubectl apply --force -f ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
           kubectl apply --force -f ./WOA/infrastructure/k8s/rabbitmq-clusterip-depl.yaml
           kubectl apply --force -f ./WOA/infrastructure/k8s/rabbitmq-srv.yaml
-          kubectl apply --force -f ./WOA/infrastructure/k8s/ingress-srv.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/ingress-srv.
+          kubectl rollout restart deployment auth-depl
+          kubectl rollout restart deployment client-depl
+          kubectl rollout restart deployment notifications-depl
+          kubectl rollout restart deployment postfeed-depl
 
   buffer:
     runs-on: ubuntu-latest
