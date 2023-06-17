@@ -34,7 +34,7 @@ const Navbar: React.FC<{ user: User }> = ({ user }: { user: User }) => {
         </div>
       </div>
       <div className="flex items-center justify-center  h-full">
-        <button className="text-center text-xl">{user.session}</button>
+        <button className="text-center text-xl">mishok{user.session}</button>
       </div>
       <div className="flex items-center justify-center  h-full">
         <button onClick={logOut} className="text-center text-xl">
