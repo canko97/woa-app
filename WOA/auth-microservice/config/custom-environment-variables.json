@@ -1,9 +1,4 @@
 {
-  "environment": "ENVIRONMENT",
-  "api": {
-    "version": "VERSION",
-    "port": "PORT"
-  },
   "database": {
     "mongodb": {
       "connectionString": "MONGODB_CONNECTION_STRING"
