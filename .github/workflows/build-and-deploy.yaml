@@ -53,13 +53,13 @@ jobs:
           sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
           sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
           sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/auth-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-srv.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/ingress-srv.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/auth-clusterip-depl.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/rabbitmq-clusterip-depl.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/rabbitmq-srv.yaml
+          kubectl apply --force -f ./WOA/infrastructure/k8s/ingress-srv.yaml
 
   buffer:
     runs-on: ubuntu-latest
