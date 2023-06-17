@@ -6,61 +6,57 @@ on:
       - 'main'
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: code checkout
-        uses: actions/checkout@v2
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: code checkout
+  #       uses: actions/checkout@v2
 
-      - name: install the gcloud cli
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          install_components: 'gke-gcloud-auth-plugin'
-          export_default_credentials: true
+  #     - name: install the gcloud cli
+  #       uses: google-github-actions/setup-gcloud@v0
+  #       with:
+  #         project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+  #         service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+  #         install_components: 'gke-gcloud-auth-plugin'
+  #         export_default_credentials: true
 
-      - name: build and push the docker images
-        env:
-          GOOGLE_PROJECT: ${{ secrets.GCLOUD_PROJECT_ID }}
-        run: |
-          gcloud auth configure-docker europe-west4-docker.pkg.dev
-          docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest ./WOA/auth-microservice
-          docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest
-          docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/notifications:latest ./WOA/notifications-microservice
-          docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/notifications:latest
-          docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/postfeed:latest ./WOA/postfeed-microservice
-          docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/postfeed:latest
-          docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/client:latest ./WOA/client
-          docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/client:latest
+  #     - name: build and push the docker images
+  #       env:
+  #         GOOGLE_PROJECT: ${{ secrets.GCLOUD_PROJECT_ID }}
+  #       run: |
+  #         gcloud auth configure-docker europe-west4-docker.pkg.dev
+  #         docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest ./WOA/auth-microservice
+  #         docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest
+  #         docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/notifications:latest ./WOA/notifications-microservice
+  #         docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/notifications:latest
+  #         docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/postfeed:latest ./WOA/postfeed-microservice
+  #         docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/postfeed:latest
+  #         docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/client:latest ./WOA/client
+  #         docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/client:latest
 
-      - name: deploy to gke
-        env:
-          GOOGLE_PROJECT: ${{ secrets.GCLOUD_PROJECT_ID }}
-        run: |
-          gcloud container clusters get-credentials woa-dev --region europe-west4-a
-          sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/auth-clusterip-depl.yaml
-          sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
-          sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
-          sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/auth-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-clusterip-depl.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-srv.yaml
-          kubectl apply -f ./WOA/infrastructure/k8s/ingress-srv.yaml
+  #     - name: deploy to gke
+  #       env:
+  #         GOOGLE_PROJECT: ${{ secrets.GCLOUD_PROJECT_ID }}
+  #       run: |
+  #         gcloud container clusters get-credentials woa-dev --region europe-west4-a
+  #         sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/auth-clusterip-depl.yaml
+  #         sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
+  #         sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
+  #         sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g" ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
+  #         kubectl apply -f ./WOA/infrastructure/k8s/auth-clusterip-depl.yaml
+  #         kubectl apply -f ./WOA/infrastructure/k8s/client-clusterip-depl.yaml
+  #         kubectl apply -f ./WOA/infrastructure/k8s/notifications-clusterip-depl.yaml
+  #         kubectl apply -f ./WOA/infrastructure/k8s/postfeed-clusterip-depl.yaml
+  #         kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-clusterip-depl.yaml
+  #         kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-srv.yaml
+  #         kubectl apply -f ./WOA/infrastructure/k8s/ingress-srv.yaml
 
   zap_scan:
+    name: Scan REST APIs
     runs-on: ubuntu-latest
-    needs: deploy
-    name: OWASP ZAP scan
     steps:
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.4.0
+      - name: ZAP Scan for crudall API
+        uses: zaproxy/action-api-scan@v0.1.0
         with:
-          docker_name: 'owasp/zap2docker-stable'
+          format: openapi
           target: 'http://woaapp.com'
-          rules_file_name: '.zap/rules.tsv'
-          fail_action: false
-          cmd_options: '-a'
