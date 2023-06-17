@@ -51,17 +51,10 @@ jobs:
           kubectl apply -f ./WOA/infrastructure/k8s/rabbitmq-srv.yaml
           kubectl apply -f ./WOA/infrastructure/k8s/ingress-srv.yaml
 
-  buffer:
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-      - name: Wait 10 min for the cluster to stabilize
-        run: sleep 600
-
   zap_scan:
     runs-on: ubuntu-latest
-    needs: buffer
-    name: Scan the application with OWAS ZAP
+    needs: deploy
+    name: OWASP ZAP scan
     steps:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.4.0
@@ -69,4 +62,5 @@ jobs:
           docker_name: 'owasp/zap2docker-stable'
           target: 'http://woaapp.com'
           rules_file_name: '.zap/rules.tsv'
+          fail_action: false
           cmd_options: '-a'
