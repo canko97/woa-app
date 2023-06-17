@@ -25,6 +25,6 @@ jobs:
         GOOGLE_PROJECT: ${{ secrets.GCLOUD_PROJECT_ID }}
       run: |
         gcloud auth configure-docker europe-west4-docker.pkg.dev
-        docker build -t europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/auth:latest ./WOA/auth-microservice
-        docker push europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/auth:latest ./WOA/auth-microservice
+        docker build -t europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest ./WOA/auth-microservice
+        docker push europe-west4-docker.pkg.dev/$GOOGLE_PROJECT/demo/auth:latest ./WOA/auth-microservice
      
