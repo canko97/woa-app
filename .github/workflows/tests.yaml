@@ -1,4 +1,4 @@
-name: Test unit tests and SonarQube integration with coverage metrics
+name: and SonarQube and unit test integration with coverage metrics
 on:
   push:
     branches:
