@@ -6,7 +6,7 @@
   },
   "database": {
     "mongodb": {
-      "connectionString": "MONGODB_CONNECTION_STRING"
+      "connectionString": "MONGODB_CONNECTION_STRING_POSTFEED"
     }
   },
   "publicKey": "PUBLIC_KEY",

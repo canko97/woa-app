@@ -13,6 +13,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: perform unit tests
+        env:
+          ACCESS_TOKEN_PUBLIC_KEY: ${{ secrets.ACCESS_TOKEN_PUBLIC_KEY }}
+          ACCESS_TOKEN_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN_PRIVATE_KEY }}
+          REFRESH_PRIVATE_KEY: ${{ secrets.REFRESH_PRIVATE_KEY }}
+          REFRESH_PUBLIC_KEY: ${{ secrets.REFRESH_PUBLIC_KEY }}
+          MONGODB_CONNECTION_STRING_AUTH: ${{ secrets.MONGODB_CONNECTION_STRING_AUTH }}
+          MONGODB_CONNECTION_STRING_POSTFEED: ${{ secrets.MONGODB_CONNECTION_STRING_POSTFEED }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          SMTP_AUTH_USER: ${{ secrets.SMTP_AUTH_USER }}
+          SMTP_AUTH_PASS: ${{ secrets.SMTP_AUTH_PASS }}
         run: |
           cd WOA/auth-microservice && npm install && npm run test:ci
           cd ../../
