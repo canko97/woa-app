@@ -2,9 +2,7 @@ name: Test unit tests and SonarQube integration with coverage metrics
 on:
   push:
     branches:
-      - master
-  pull_request:
-    types: [opened, synchronize, reopened]
+      - dev
 jobs:
   sonarqube:
     name: sonarqube
