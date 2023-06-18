@@ -1,18 +1,26 @@
-name: tests
-
+name: Test unit tests and SonarQube integration with coverage metrics
 on:
   push:
     branches:
-      - 'dev'
-
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
-  build:
+  sonarqube:
+    name: sonarqube
     runs-on: ubuntu-latest
     steps:
-      - name: code checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: |
+          cd WOA/auth-microservice/ && npm install
+          cd ../../
+          cd WOA/postfeed-microservice/ && npm install
+          cd ../../
 
-      - name: perform unit tests
+      - name: Test and coverage
         env:
           ACCESS_TOKEN_PUBLIC_KEY: ${{ secrets.ACCESS_TOKEN_PUBLIC_KEY }}
           ACCESS_TOKEN_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN_PRIVATE_KEY }}
@@ -25,11 +33,13 @@ jobs:
           SMTP_AUTH_USER: ${{ secrets.SMTP_AUTH_USER }}
           SMTP_AUTH_PASS: ${{ secrets.SMTP_AUTH_PASS }}
         run: |
-          cd WOA/auth-microservice && npm install && npm run test:ci
+          cd WOA/auth-microservice/ && npm run test
+          cd ../../
+          cd WOA/postfeed-microservice/ && npm run test
           cd ../../
 
-      - name: SonarQube scan
-        uses: sonarsource/sonarqube-scan-action@master
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
