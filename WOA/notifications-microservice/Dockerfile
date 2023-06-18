@@ -1,5 +1,8 @@
 FROM node:alpine
 
+ARG SMTP_AUTH_USER
+ARG SMTP_AUTH_PASS
+
 WORKDIR /app
 
 COPY package.json ./
