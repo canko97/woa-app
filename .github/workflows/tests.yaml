@@ -1,19 +1,33 @@
-name: tests
-
+name: SonarQube with unit test coverage metrics
 on:
   push:
     branches:
-      - 'dev'
-
+      - dev
 jobs:
-  build:
+  sonarqube:
+    name: sonarqube
     runs-on: ubuntu-latest
     steps:
-      - name: code checkout
-        uses: actions/checkout@v2
-
-      - name: perform unit tests
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: |
+          cd ./WOA/auth-microservice && npm install
+          cd ../../
+          cd ./WOA/postfeed-microservice && npm install
+          cd ../../
+      - name: Test and coverage
+        run: |
+          cd ./WOA/auth-microservice && npm run test
+          cd ../../
+          cd ./WOA/postfeed-microservice && npm run test
+          cd ../../
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@master
         env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           ACCESS_TOKEN_PUBLIC_KEY: ${{ secrets.ACCESS_TOKEN_PUBLIC_KEY }}
           ACCESS_TOKEN_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN_PRIVATE_KEY }}
           REFRESH_PRIVATE_KEY: ${{ secrets.REFRESH_PRIVATE_KEY }}
@@ -24,14 +38,3 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           SMTP_AUTH_USER: ${{ secrets.SMTP_AUTH_USER }}
           SMTP_AUTH_PASS: ${{ secrets.SMTP_AUTH_PASS }}
-        run: |
-          cd WOA/auth-microservice && npm install && npm run test
-          cd ../../
-          cd WOA/postfeed && npm install && npm run test
-          cd ../../
-
-      - name: SonarQube scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
