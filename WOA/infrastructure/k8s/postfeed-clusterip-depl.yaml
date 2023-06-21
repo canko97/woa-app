@@ -17,6 +17,10 @@ spec:
         - name: postfeed
           image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/postfeed
           imagePullPolicy: Always
+          volumeMounts:
+            - name: pubsub-credentials
+              mountPath: /app/keyfile.json
+              subPath: keyfile.json
           resources:
             requests:
               cpu: 200m
@@ -24,6 +28,10 @@ spec:
             limits:
               cpu: 300m
               memory: 300Mi
+      volumes:
+        - name: pubsub-credentials
+          secret:
+            secretName: pubsub-credentials
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
