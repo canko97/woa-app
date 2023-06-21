@@ -57,9 +57,8 @@ export class App {
   public listen(): Server {
     const app = this.express.listen(this.port, async () => {
       log.info(`App started at http://localhost:${this.port}`);
-      log.info(config.get('origin'));
-      log.info(config.get('database.mongodb.connectionString'));
       console.log(process.env.NODE_ENV);
+      console.log(__dirname);
       log.info(`API v${this.version}`);
       await connectToDb();
     });
