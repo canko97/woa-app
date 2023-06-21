@@ -17,10 +17,6 @@ spec:
         - name: auth
           image: europe-west4-docker.pkg.dev/GOOGLE_PROJECT/demo/auth
           imagePullPolicy: Always
-          volumeMounts:
-            - name: pubsub-credentials
-              mountPath: /app/config
-              subPath: keyfile.json
           resources:
             requests:
               cpu: 200m
@@ -28,6 +24,9 @@ spec:
             limits:
               cpu: 300m
               memory: 300Mi
+          volumeMounts:
+            - name: pubsub-credentials
+              mountPath: config/keyfile.json
       volumes:
         - name: pubsub-credentials
           secret:
