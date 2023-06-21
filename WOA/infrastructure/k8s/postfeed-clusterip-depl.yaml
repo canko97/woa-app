@@ -19,7 +19,7 @@ spec:
           imagePullPolicy: Always
           volumeMounts:
             - name: pubsub-credentials
-              mountPath: /app/keyfile.json
+              mountPath: /app/config
               subPath: keyfile.json
           resources:
             requests:
