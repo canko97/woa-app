@@ -24,13 +24,6 @@ spec:
             limits:
               cpu: 300m
               memory: 300Mi
-          volumeMounts:
-            - name: pubsub-credentials
-              mountPath: config/keyfile.json
-      volumes:
-        - name: pubsub-credentials
-          secret:
-            secretName: pubsub-credentials
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler

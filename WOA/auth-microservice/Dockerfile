@@ -1,5 +1,6 @@
 FROM node:alpine
 
+ARG KEYFILE_CONTENT
 ARG ACCESS_TOKEN_PUBLIC_KEY
 ARG ACCESS_TOKEN_PRIVATE_KEY
 ARG REFRESH_PRIVATE_KEY
@@ -13,6 +14,8 @@ WORKDIR /app
 COPY package.json ./
 
 RUN npm install
+
+RUN echo $KEYFILE_CONTENT > ./config/keyfile.json
 
 COPY ./ ./
 
