@@ -1,6 +1,6 @@
 FROM node:alpine
 
-ARG KEYFILE_CONTENT
+# ARG KEYFILE_CONTENT
 ARG MONGODB_CONNECTION_STRING_POSTFEED
 ARG ACCESS_TOKEN_PUBLIC_KEY
 ARG REFRESH_PUBLIC_KEY
@@ -11,7 +11,7 @@ COPY package.json ./
 
 RUN npm install
 
-RUN echo $KEYFILE_CONTENT > ./config/keyfile.json
+# RUN echo $KEYFILE_CONTENT > ./config/keyfile.json
 
 COPY ./ ./
 
