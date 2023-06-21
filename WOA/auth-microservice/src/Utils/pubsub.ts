@@ -8,43 +8,57 @@ class PubSubHandler {
   private subscription: any;
 
   constructor() {
-    this.pubsub = new PubSub({
-      keyFilename: './config/keyfile.json', // Path to your service account key file
-    });
+    try {
+      this.pubsub = new PubSub({
+        keyFilename: './keyfile.json', // Path to your service account key file
+      });
+    } catch (error) {
+      console.error('Failed to initialize PubSub:', error);
+    }
     this.topicName = 'deleteAccount';
-    this.subscriptionName = `auth-${uuidv4()}`;
+    this.subscriptionName = `postfeed-${uuidv4()}`;
     this.subscription = null;
   }
 
   async createTopic(): Promise<void> {
-    const [topic] = await this.pubsub.createTopic(this.topicName);
-    console.log(`Topic ${topic.name} created.`);
+    try {
+      const [topic] = await this.pubsub.createTopic(this.topicName);
+      console.log(`Topic ${topic.name} created.`);
+    } catch (error) {
+      console.error('Failed to create topic:', error);
+    }
   }
 
   async createSubscription(): Promise<void> {
-    const [subscription] = await this.pubsub
-      .topic(this.topicName)
-      .createSubscription(this.subscriptionName);
-    console.log(`Subscription ${subscription.name} created.`);
+    try {
+      const [subscription] = await this.pubsub
+        .topic(this.topicName)
+        .createSubscription(this.subscriptionName);
+      console.log(`Subscription ${subscription.name} created.`);
+    } catch (error) {
+      console.error('Failed to create subscription:', error);
+    }
   }
 
   async publishMessage(data: string): Promise<void> {
-    const dataBuffer = Buffer.from(data);
-    await this.pubsub.topic(this.topicName).publish(dataBuffer);
-    console.log(`Message published.`);
+    try {
+      const dataBuffer = Buffer.from(data);
+      await this.pubsub.topic(this.topicName).publish(dataBuffer);
+      console.log(`Message published.`);
+    } catch (error) {
+      console.error('Failed to publish message:', error);
+    }
   }
 
   startMessageConsumer(messageHandler: (message: Message) => void): void {
-    this.subscription = this.pubsub.subscription(this.subscriptionName);
+    if (!this.subscription) {
+      console.error(
+        'Subscription is not created. Cannot start message consumer.'
+      );
+      return;
+    }
     this.subscription.on('message', messageHandler);
   }
-
-  // stopMessageConsumer(): void {
-  //   if (this.subscription) {
-  //     this.subscription.removeListener('message', messageHandler);
-  //     this.subscription.close();
-  //   }
-  // }
 }
 
 export default new PubSubHandler();
