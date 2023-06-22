@@ -5,7 +5,12 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import KeepAlive from './KeepAlive';
 
-const Navbar: React.FC<{ user: User }> = ({ user }: { user: User }) => {
+interface NavbarProps {
+  user: User;
+  onContentChange: (content: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ user, onContentChange }) => {
   const router = useRouter();
 
   async function logOut() {
@@ -15,6 +20,10 @@ const Navbar: React.FC<{ user: User }> = ({ user }: { user: User }) => {
     );
     router.reload();
   }
+
+  const handleAccountClick = () => {
+    onContentChange('Account');
+  };
 
   return (
     <div className="bg-white border-b h-full flex justify-between p-2 ">
@@ -33,11 +42,14 @@ const Navbar: React.FC<{ user: User }> = ({ user }: { user: User }) => {
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-center  h-full">
-        <button className="text-center text-xl">mishok{user.session}</button>
-      </div>
-      <div className="flex items-center justify-center  h-full">
-        <button onClick={logOut} className="text-center text-xl">
+      <div>
+        <button
+          className="text-center text-xl mr-3"
+          onClick={handleAccountClick}
+        >
+          {user.firstName} {user.lastName}
+        </button>
+        <button onClick={logOut} className="text-center text-xl mr-5">
           Log Out
         </button>
       </div>

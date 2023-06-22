@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   createUserHandler,
+  deleteAccountHandler,
   forgotPasswordHandler,
   getAllUsersHandler,
   getCurrentUserHandler,
@@ -33,6 +34,13 @@ router.post(
   '/api/auth/users/create',
   validateResource(createUserSchema),
   createUserHandler
+);
+
+router.delete(
+  '/api/auth/users/delete',
+  requireUser,
+  authorizeUser,
+  deleteAccountHandler
 );
 
 router.post(

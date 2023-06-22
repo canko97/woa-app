@@ -13,6 +13,7 @@ import {
   findUserByEmail,
   findUserById,
   findAllUsers,
+  deleteUserAccount,
 } from '../Services/user.service';
 import { nanoid } from 'nanoid';
 import sendRabbitMQ from '../Utils/rabbitMQ';
@@ -190,4 +191,29 @@ export async function getAllUsersHandler(req: Request, res: Response) {
   });
 
   return res.json(sanitizedUsers);
+}
+
+export async function deleteAccountHandler(req: Request, res: Response) {
+  try {
+    if (!res.locals.user) {
+      return;
+    }
+    const userId = res.locals.user._id;
+
+    await deleteUserAccount(userId);
+
+    // const PubsubHandler = new pubsubHandler();
+    // //Publish a message to notify the postfeed-microservice
+    // await PubsubHandler.publishMessage(userId);
+
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+    res.status(204).send({
+      accessToken: null,
+      refreshToken: null,
+    });
+  } catch (error: any) {
+    console.log(error.message);
+    res.status(404).send(error.message);
+  }
 }
