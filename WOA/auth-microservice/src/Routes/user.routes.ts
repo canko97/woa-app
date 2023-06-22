@@ -7,11 +7,10 @@ import {
   getUserNameHandler,
   resetPasswordHandler,
   verifyUserHandler,
-  deleteAccountHandler,
 } from '../Controllers/user.controller';
 import validateResource from '../Middleware/validateResource';
 import requireUser from '../Middleware/requireUser';
-import { authorizeAdmin, authorizeUser } from '../Middleware/authorization';
+import { authorizeUser } from '../Middleware/authorization';
 import {
   createUserSchema,
   verifyUserSchema,
@@ -26,7 +25,7 @@ router.get(
   '/api/auth/users/get',
   requireUser,
   authorizeUser,
-  authorizeAdmin,
+  // authorizeAdmin,
   getAllUsersHandler
 );
 
@@ -34,13 +33,6 @@ router.post(
   '/api/auth/users/create',
   validateResource(createUserSchema),
   createUserHandler
-);
-
-router.delete(
-  '/api/auth/users/delete',
-  requireUser,
-  authorizeUser,
-  deleteAccountHandler
 );
 
 router.post(

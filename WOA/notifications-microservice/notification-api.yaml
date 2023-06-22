@@ -1,0 +1,33 @@
+#prettier-ignore
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-api
+  template:
+    metadata:
+      labels:
+        app: notifications-api
+    spec:
+      containers:
+      - name: notifications-api
+        image: notifications-api:v1.0
+        ports:
+        - containerPort: 5001
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-api
+spec:
+  selector:
+    app: notifications-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5001

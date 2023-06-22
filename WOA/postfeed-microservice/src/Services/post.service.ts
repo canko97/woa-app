@@ -40,7 +40,3 @@ export async function deletePost(
 ) {
   return PostModel.deleteOne(query);
 }
-
-export async function deleteUserPosts(user: string) {
-  return PostModel.deleteMany({ user: user });
-}

@@ -48,7 +48,7 @@ function RegisterPage() {
   async function onSubmit(values: CreateUserInput) {
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_AUTH_SERVER_ENDPOINT}/api/auth/users/create`,
+        `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/auth/users/create`,
         values
       );
 

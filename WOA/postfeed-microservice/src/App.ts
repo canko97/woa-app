@@ -11,7 +11,6 @@ import { AllowedOrigins } from './Utils/corsOrigins';
 import { Server } from 'http';
 import extractUser from './Middleware/extractUser';
 import config from 'config';
-// import { startPubSubConsumer } from './Utils/pubSubConsumer';
 
 export class App {
   private express: Application;
@@ -24,7 +23,6 @@ export class App {
     this.version = version || '1.0';
 
     this.initializeMiddleware();
-    // this.startConsumer();
   }
 
   private initializeMiddleware(): void {
@@ -38,14 +36,6 @@ export class App {
     this.express.use(express.urlencoded({ extended: false }));
     this.express.use(compression());
   }
-
-  // private startConsumer(): void {
-  //   try {
-  //     startPubSubConsumer();
-  //   } catch (error: any) {
-  //     console.error(error.message);
-  //   }
-  // }
 
   corsOptions: cors.CorsOptions = {
     origin: function (origin, callback) {

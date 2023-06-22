@@ -14,11 +14,6 @@ export async function findUserById(id: string) {
   return UserModel.findById(_id);
 }
 
-export async function deleteUserAccount(id: string) {
-  const _id = id;
-  return UserModel.deleteOne({ _id });
-}
-
 export async function findAndUpdateUser(
   query: FilterQuery<User>,
   update: UpdateQuery<User>,
