@@ -22,8 +22,7 @@ import { omit } from 'lodash';
 import { FlattenMaps, LeanDocument } from 'mongoose';
 
 import { Message } from '@google-cloud/pubsub';
-import PubSubManager from '../Utils/pubSubInstance';
-import publishMessage from '../Utils/publisher';
+// import publishMessage from '../Utils/publisher';
 ////////////////////////////////////////////////////////////////////////
 // import pubsubHandler from '../Utils/pubsub';
 ////////////////////////////////
@@ -209,7 +208,7 @@ export async function deleteAccountHandler(req: Request, res: Response) {
 
     await deleteUserAccount(userId);
 
-    await publishMessage(userId);
+    // await publishMessage(userId);
 
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
