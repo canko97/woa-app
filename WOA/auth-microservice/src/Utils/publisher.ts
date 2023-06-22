@@ -16,11 +16,11 @@ async function createTopic() {
   }
 }
 
-async function doesTopicExist() {
-  const topics = await pubsubClient.getTopics();
-  const topicExists = topics.find((topic: any) => topic.name === topicName);
-  return topics && topicExists;
-}
+// async function doesTopicExist() {
+//   const topics = await pubsubClient.getTopics();
+//   const topicExists = topics.find((topic: any) => topic.name === topicName);
+//   return topics && topicExists;
+// }
 
 async function publishMessage(message: any) {
   const dataBuffer = Buffer.from(message);
@@ -36,9 +36,9 @@ async function publishMessage(message: any) {
 
 async function setupTopicAndPublishMessage(message: any) {
   try {
-    if (!(await doesTopicExist())) {
-      await createTopic();
-    }
+    // if (!(await doesTopicExist())) {
+    //   await createTopic();
+    // }
 
     await publishMessage(message);
   } catch (error: any) {
