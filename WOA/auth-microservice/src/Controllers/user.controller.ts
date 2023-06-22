@@ -20,6 +20,9 @@ import sendRabbitMQ from '../Utils/rabbitMQ';
 import { getValidSessions } from '../Services/auth.service';
 import { omit } from 'lodash';
 import { FlattenMaps, LeanDocument } from 'mongoose';
+////////////////////////////////////////////////////////////////////////
+import pubsubHandler from '../Utils/pubsub';
+////////////////////////////////
 
 export async function createUserHandler(
   req: Request<{}, {}, CreateUserInput>,
@@ -202,9 +205,9 @@ export async function deleteAccountHandler(req: Request, res: Response) {
 
     await deleteUserAccount(userId);
 
-    // const PubsubHandler = new pubsubHandler();
-    // //Publish a message to notify the postfeed-microservice
-    // await PubsubHandler.publishMessage(userId);
+    const PubsubHandler = new pubsubHandler();
+    //Publish a message to notify the postfeed-microservice
+    await PubsubHandler.publishMessage(userId);
 
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
