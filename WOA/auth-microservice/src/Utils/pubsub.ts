@@ -50,15 +50,15 @@ class PubSubHandler {
     }
   }
 
-  startMessageConsumer(messageHandler: (message: Message) => void): void {
-    if (!this.subscription) {
-      console.error(
-        'Subscription is not created. Cannot start message consumer.'
-      );
-      return;
-    }
-    this.subscription.on('message', messageHandler);
-  }
+  // startMessageConsumer(messageHandler: (message: Message) => void): void {
+  //   if (!this.subscription) {
+  //     console.error(
+  //       'Subscription is not created. Cannot start message consumer.'
+  //     );
+  //     return;
+  //   }
+  //   this.subscription.on('message', messageHandler);
+  // }
 }
 
 export default PubSubHandler;
