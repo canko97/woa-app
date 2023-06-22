@@ -20,6 +20,10 @@ import sendRabbitMQ from '../Utils/rabbitMQ';
 import { getValidSessions } from '../Services/auth.service';
 import { omit } from 'lodash';
 import { FlattenMaps, LeanDocument } from 'mongoose';
+
+import { Message } from '@google-cloud/pubsub';
+import PubSubManager from '../Utils/pubSubInstance';
+import publishMessage from '../Utils/publisher';
 ////////////////////////////////////////////////////////////////////////
 // import pubsubHandler from '../Utils/pubsub';
 ////////////////////////////////
@@ -205,9 +209,7 @@ export async function deleteAccountHandler(req: Request, res: Response) {
 
     await deleteUserAccount(userId);
 
-    // const PubsubHandler = new pubsubHandler();
-    // //Publish a message to notify the postfeed-microservice
-    // await PubsubHandler.publishMessage(userId);
+    await publishMessage(userId);
 
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
