@@ -21,12 +21,6 @@ import { getValidSessions } from '../Services/auth.service';
 import { omit } from 'lodash';
 import { FlattenMaps, LeanDocument } from 'mongoose';
 
-import { Message } from '@google-cloud/pubsub';
-// import publishMessage from '../Utils/publisher';
-////////////////////////////////////////////////////////////////////////
-// import pubsubHandler from '../Utils/pubsub';
-////////////////////////////////
-
 export async function createUserHandler(
   req: Request<{}, {}, CreateUserInput>,
   res: Response
@@ -207,8 +201,6 @@ export async function deleteAccountHandler(req: Request, res: Response) {
     const userId = res.locals.user._id;
 
     await deleteUserAccount(userId);
-
-    // await publishMessage(userId);
 
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
