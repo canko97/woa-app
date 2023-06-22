@@ -11,7 +11,7 @@ import { AllowedOrigins } from './Utils/corsOrigins';
 import { Server } from 'http';
 import extractUser from './Middleware/extractUser';
 import config from 'config';
-import startSubscriber from './Utils/consumer';
+// import startSubscriber from './Utils/consumer';
 
 export class App {
   private express: Application;
@@ -24,7 +24,7 @@ export class App {
     this.version = version || '1.0';
 
     this.initializeMiddleware();
-    this.StartSubscriber();
+    // this.StartSubscriber();
   }
 
   private initializeMiddleware(): void {
@@ -39,9 +39,9 @@ export class App {
     this.express.use(compression());
   }
 
-  async StartSubscriber() {
-    await startSubscriber();
-  }
+  // async StartSubscriber() {
+  //   await startSubscriber();
+  // }
 
   corsOptions: cors.CorsOptions = {
     origin: function (origin, callback) {
