@@ -203,8 +203,9 @@ export async function deleteAccountHandler(req: Request, res: Response) {
 
     await deleteUserAccount(userId);
 
+    const PubsubHandler = new pubsubHandler();
     //Publish a message to notify the postfeed-microservice
-    await pubsubHandler.publishMessage(userId);
+    await PubsubHandler.publishMessage(userId);
 
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');

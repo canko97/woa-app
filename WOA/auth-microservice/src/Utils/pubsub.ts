@@ -1,6 +1,59 @@
 import { PubSub, Message } from '@google-cloud/pubsub';
 import { v4 as uuidv4 } from 'uuid';
 
+// class PubSubManager {
+//   private static instance: PubSubManager;
+//   private pubSubClient = new PubSub();
+
+//   private constructor() {}
+
+//   private async initialise() {
+//     const subscriptionName = 'sub-' + uuidv4();
+//     await this.pubSubClient
+//       .topic('accountDeleted')
+//       .createSubscription(subscriptionName);
+
+//     const subscription = this.pubSubClient.subscription(subscriptionName);
+
+//     const handleMessage = (message: Message) => {
+//       // Parse event data and fabricate event
+//       const messageData = JSON.parse(message.data.toString('ascii'));
+//       console.log(messageData);
+//       // "Ack" (acknowledge receipt of) the message
+//       message.ack();
+//     };
+
+//     // Listen for new messages
+//     subscription.on('message', handleMessage);
+//   }
+
+//   public static getInstance(): PubSubManager {
+//     if (!PubSubManager.instance) {
+//       PubSubManager.instance = new PubSubManager();
+//       PubSubManager.instance.initialise();
+//     }
+
+//     return PubSubManager.instance;
+//   }
+
+//   public emit(message: string) {
+//     const dataBuffer = Buffer.from(JSON.stringify(message));
+
+//     this.pubSubClient
+//       .topic('accountDeleted')
+//       .publish(dataBuffer)
+//       .then((messageId: string) => {
+//         console.log(`Pushed event message with id: ${messageId}`);
+//       })
+
+//       .catch((err: unknown) => {
+//         const error = err as Error;
+//         console.error(error.message);
+//       });
+//   }
+// }
+
+////////////////////////////////////////////////////////////////
 class PubSubHandler {
   private pubsub: PubSub;
   private topicName: string;
@@ -61,4 +114,4 @@ class PubSubHandler {
   }
 }
 
-export default new PubSubHandler();
+export default PubSubHandler;
