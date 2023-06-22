@@ -3,15 +3,17 @@ require('dotenv').config();
 
 const pubsubClient = new PubSub();
 
-const data = JSON.stringify({
-  userId: '50001',
-});
 const topicName = 'deleteAccount';
 
 async function createTopic() {
   // Creates a new topic
-  await pubsubClient.createTopic(topicName);
-  console.log(`Topic ${topicName} created.`);
+  try {
+    await pubsubClient.createTopic(topicName);
+    console.log(`Topic ${topicName} created.`);
+  } catch (error: any) {
+    console.error(`Error creating topic: ${error.message}`);
+    throw error; // Rethrow the error to be handled by the caller
+  }
 }
 
 async function doesTopicExist() {
@@ -20,18 +22,33 @@ async function doesTopicExist() {
   return topics && topicExists;
 }
 
-if (!doesTopicExist()) {
-  createTopic();
-}
-
-export default async function publishMessage(message: any) {
+async function publishMessage(message: any) {
   const dataBuffer = Buffer.from(message);
 
   try {
     const messageId = await pubsubClient.topic(topicName).publish(dataBuffer);
     console.log(`Message ${messageId} published`);
   } catch (error: any) {
-    console.error(`Received error while publishing: ${error.message}`);
-    process.exitCode = 1;
+    console.error(`Error publishing message: ${error.message}`);
+    throw error; // Rethrow the error to be handled by the caller
   }
 }
+
+async function setupTopicAndPublishMessage(message: any) {
+  try {
+    if (!(await doesTopicExist())) {
+      await createTopic();
+    }
+
+    await publishMessage(message);
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    process.exitCode = 1;
+  } finally {
+    pubsubClient.close(); // Close the PubSub client to release resources
+  }
+}
+
+// Example usage
+const message = 'Hello, PubSub!';
+setupTopicAndPublishMessage(message);
