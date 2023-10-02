@@ -46,7 +46,7 @@
     "winston": "^3.8.2",
     "winston-mongodb": "^5.1.1",
     "ws": "^8.13.0",
-    "zod": "^3.9.5"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.1",
