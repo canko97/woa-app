@@ -41,7 +41,7 @@
     "prom-client": "^14.2.0",
     "response-time": "^2.3.2",
     "sequelize": "^6.31.0",
-    "tsoa": "^5.1.1",
+    "tsoa": "^6.0.0",
     "uuid": "^9.0.0",
     "winston": "^3.8.2",
     "winston-mongodb": "^5.1.1",
